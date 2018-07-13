@@ -2,8 +2,21 @@
 
 float r1= 10000.0;
 LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
+
+byte ohm[8] = {
+  B00000,
+  B01110,
+  B10001,
+  B10001,
+  B10001,
+  B01010,
+  B11011,
+  B00000
+};
+
 void setup()
 {
+  lcd.createChar(1, ohm);
   lcd.begin(16, 2);
 }
 
@@ -27,6 +40,7 @@ void printPrecent(float ohms)
   char ohmsMsg[12];
   sprintf(ohmsMsg, "R: = %d", (int)ohms);
   lcd.print(ohmsMsg);
+  lcd.write(1);
   lcd.setCursor(12, 1);
   char precentMsg[6];
   sprintf(precentMsg, "%d%%", precent);
