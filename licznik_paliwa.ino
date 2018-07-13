@@ -9,9 +9,8 @@ void setup()
 
 void loop()
 {
-  lcd.setCursor(0, 1);
   printPrecent(getOhms());
-  delay(3000);
+  delay(5000);
 }
 
 float calculatePrecent(float ohms) 
@@ -23,20 +22,34 @@ void printPrecent(float ohms)
 {
   int precent = (int) calculatePrecent(ohms);
   lcd.setCursor(0, 0);
+  lcd.print(buildProgressbar(precent));
+  lcd.setCursor(0, 1);
+  char ohmsMsg[12];
+  sprintf(ohmsMsg, "R: = %d", (int)ohms);
+  lcd.print(ohmsMsg);
+  lcd.setCursor(12, 1);
+  char precentMsg[6];
+  sprintf(precentMsg, "%d%%", precent);
+  lcd.print(precentMsg);
+}
+
+String buildProgressbar(int precent)
+{
+  int progressCount = ((precent * 14) / 100);
   String progress;
   progress += F("[");
-  for(int i = 0; i <= 6; i++)
+  for(int i = 0; i <= 13; i++)
   {
-    progress += F("#");
+    if(i < (progressCount - 1)) 
+    {
+      progress += F(" ");
+    } else
+    {
+      progress += F("#");
+    }
   }
   progress += F("]");
-  lcd.print(progress);
-  lcd.setCursor(0, 1);
-  //char voltageMsg[25];
-  //sprintf(voltageMsg, "WR: = %f", ohms);
-  lcd.print(ohms);
-  //lcd.setCursor(12, 1);
-  lcd.print(String(precent, 2) + "%");
+  return progress;
 }
 
 float getOhms() 
