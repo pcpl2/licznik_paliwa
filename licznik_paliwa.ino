@@ -1,7 +1,7 @@
 #include <LiquidCrystal.h>
 
 float r1= 10000.0;
-LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
+LiquidCrystal lcd(3, 4, 5, 6, 7, 8);
 
 byte ohm[8] = {
   B00000,
@@ -54,7 +54,7 @@ String buildProgressbar(int precent)
   progress += F("[");
   for(int i = 0; i <= 13; i++)
   {
-    if(i < (progressCount - 1)) 
+    if(i < (progressCount - 1))
     {
       progress += F(" ");
     } else
