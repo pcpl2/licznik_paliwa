@@ -22,8 +22,9 @@ void setup()
 
 void loop()
 {
+  lcd.clear();
   printPrecent(getOhms());
-  delay(5000);
+  delay(20);
 }
 
 float calculatePrecent(float ohms) 
