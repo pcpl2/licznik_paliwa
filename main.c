@@ -67,7 +67,8 @@ void printPrecent(float ohms)
 {
   int precent = (int) calculatePrecent(ohms);
   LCD_GoTo(0, 0);
-  LCD_WriteText(buildProgressbar(precent));
+  buildProgressbar(precent);
+  //LCD_WriteText(buildProgressbar(precent));
   LCD_GoTo(0, 1);
   char ohmsMsg[12];
   sprintf(ohmsMsg, "R: = %d", (int)ohms);
@@ -79,26 +80,19 @@ void printPrecent(float ohms)
   LCD_WriteText(precentMsg);
 }
 
-char* buildProgressbar(int precent)
+void buildProgressbar(int precent)
 {
+  const size_t PROGRESS_BAR_LENGTH = 16;
   int progressCount = ((precent * 14) / 100);
-  char *progress = calloc(16, 1);
-  char *buffer = calloc(14, 1);
-  for(int i = 0; i <= 13; i++)
+  char progress[PROGRESS_BAR_LENGTH+1];
+  progress[0] = '[';
+  for (int i = 1; i < PROGRESS_BAR_LENGTH - 1; ++i)
   {
-	  buffer[i] = i < (progressCount - 1) ? '#' : ' ';
-
-/*    if(i < (progressCount - 1))
-    {
-    	sprintf(&progress, "%s ", progress);
-    } else
-    {
-    	sprintf(&progress, "%s#", progress);
-    }*/
+      progress[i] = (i < progressCount) ? '#' : ' ';
   }
-  sprintf(progress, "[%s]", buffer);
-  free(buffer);
-  return progress;
+  progress[PROGRESS_BAR_LENGTH - 1] = ']';
+
+  LCD_WriteText(progress);
 }
 
 float getOhms(void)

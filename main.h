@@ -12,7 +12,7 @@
 void loop(void);
 void initOhms(void);
 void printPrecent(float ohms);
-char* buildProgressbar(int precent);
+void buildProgressbar(int precent);
 float getOhms(void);
 
 
