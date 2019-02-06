@@ -3,37 +3,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "HD44780.h"
-
 #include "main.h"
 
+#include "lcdpcf8574/lcdpcf8574.h"
+#include "pcf8574/pcf8574.h"
 
 #define INPUT_DATA			PC0
 #define	r1					216
 
-const unsigned short ohm[8] = {
-	0b00000,
-	0b01110,
-	0b10001,
-	0b10001,
-	0b10001,
-	0b01010,
-	0b11011,
-	0b00000
-};
-
 int main( void )
 {
-	LCD_Initalize();
 
-	LCD_WriteText("Fuel Counter By");
-	LCD_GoTo(0, 1);
-	LCD_WriteText("pcpl2");
+	lcd_init(LCD_DISP_ON);
+	lcd_home();
+	lcd_led(0);
+	lcd_gotoxy(0, 0);
+	lcd_puts("Fuel Counter by");
+	lcd_gotoxy(0, 1);
+	lcd_puts("pcpl2");
 
 	initOhms();
 
 	_delay_ms(500);
-	LCD_Clear();
+	lcd_clrscr();
+
 	while(1)
 	{
 		loop();
@@ -66,10 +59,9 @@ float calculatePrecent(float ohms)
 void printPrecent(float ohms)
 {
   int precent = (int) calculatePrecent(ohms);
-  LCD_GoTo(0, 0);
+  lcd_gotoxy(0, 0);
   buildProgressbar(precent);
-  //LCD_WriteText(buildProgressbar(precent));
-  LCD_GoTo(0, 1);
+  lcd_gotoxy(0, 1);
   char ohmsMsg[12];
   if((int)ohms < 100) {
 	  sprintf(ohmsMsg, "R: = %d ", (int)ohms);
@@ -78,9 +70,8 @@ void printPrecent(float ohms)
   {
 	  sprintf(ohmsMsg, "R: = %d", (int)ohms);
   }
-  LCD_WriteText(ohmsMsg);
- // LCD_WriteData(ohm);
-  LCD_GoTo(12, 1);
+  lcd_puts(ohmsMsg);
+  lcd_gotoxy(12, 1);
   char precentMsg[6];
   if(precent < 100)
   {
@@ -90,7 +81,7 @@ void printPrecent(float ohms)
   {
 	  sprintf(precentMsg, "%d%%", precent);
   }
-  LCD_WriteText(precentMsg);
+  lcd_puts(precentMsg);
 }
 
 void buildProgressbar(int precent)
@@ -105,7 +96,7 @@ void buildProgressbar(int precent)
   }
   progress[PROGRESS_BAR_LENGTH - 1] = ']';
 
-  LCD_WriteText(progress);
+  lcd_puts(progress);
 }
 
 float getOhms(void)
@@ -116,4 +107,3 @@ float getOhms(void)
 	float r = r1 * ( 5.0f/uWyj - 1);
 	return r;
 }
-
