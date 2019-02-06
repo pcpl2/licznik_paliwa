@@ -36,7 +36,6 @@ int main( void )
 	LCD_Clear();
 	while(1)
 	{
-		LCD_Clear();
 		loop();
 	}
 }
@@ -72,12 +71,25 @@ void printPrecent(float ohms)
   //LCD_WriteText(buildProgressbar(precent));
   LCD_GoTo(0, 1);
   char ohmsMsg[12];
-  sprintf(ohmsMsg, "R: = %d", (int)ohms);
+  if((int)ohms < 100) {
+	  sprintf(ohmsMsg, "R: = %d ", (int)ohms);
+  }
+  else
+  {
+	  sprintf(ohmsMsg, "R: = %d", (int)ohms);
+  }
   LCD_WriteText(ohmsMsg);
  // LCD_WriteData(ohm);
   LCD_GoTo(12, 1);
   char precentMsg[6];
-  sprintf(precentMsg, "%d%%", precent);
+  if(precent < 100)
+  {
+	  sprintf(precentMsg, " %d%%", precent);
+  }
+  else
+  {
+	  sprintf(precentMsg, "%d%%", precent);
+  }
   LCD_WriteText(precentMsg);
 }
 
