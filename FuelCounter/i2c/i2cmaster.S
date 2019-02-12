@@ -42,15 +42,15 @@
 ;
 
 #if defined (__AVR_ATtiny85__)
-#define SDA     	0		// SDA Port D, Pin 4
-#define SCL		2		// SCL Port D, Pin 5
-#define SDA_PORT        PORTB           // SDA Port D
-#define SCL_PORT        PORTB           // SCL Port D
+#define SDA     	0		// SDA Port B, Pin 0
+#define SCL		2		// SCL Port B, Pin 2
+#define SDA_PORT        PORTB           // SDA Port B
+#define SCL_PORT        PORTB           // SCL Port B
 #elif defined (__AVR_ATmega8__)
 #define SDA     	4		// SDA Port D, Pin 4
 #define SCL		5		// SCL Port D, Pin 5
-#define SDA_PORT        PORTD           // SDA Port D
-#define SCL_PORT        PORTD           // SCL Port D
+#define SDA_PORT        PORTC           // SDA Port C
+#define SCL_PORT        PORTC           // SCL Port C
 #endif
 ;******
 
